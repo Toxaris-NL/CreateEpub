@@ -40,8 +40,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Container.cs" />
+    <Compile Include="DCItem.cs" />
+    <Compile Include="Document.cs" />
+    <Compile Include="Guide.cs" />
+    <Compile Include="Item.cs" />
+    <Compile Include="Manifest.cs" />
+    <Compile Include="Metadata.cs" />
+    <Compile Include="MetaItem.cs" />
+    <Compile Include="NavPoint.cs" />
+    <Compile Include="Ncx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Spine.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\zipstorer\net45\Zipstorer.csproj">
+      <Project>{1a30c0e0-46b7-4939-bd6b-1293b197f6b0}</Project>
+      <Name>Zipstorer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
