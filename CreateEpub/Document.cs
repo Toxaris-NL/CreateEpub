@@ -280,7 +280,11 @@ namespace Epub {
                 }
 
                 if (_apple) {
-                    using (MemoryStream apple = new MemoryStream(System.Text.Encoding.UTF8.GetBytes("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<display_options>\n<platform name=\"*\">\n<option name=\"specified-fonts\">true</option>\n</platform>\n</display_options>"))) {
+                    AppleIbooksOptions appledisplay = new AppleIbooksOptions();
+
+                    using (MemoryStream apple = new MemoryStream()) {
+                        XDocument applexml = new XDocument(appledisplay.ToElement());
+                        applexml.Save(apple);
                         zip.AddStream(ZipStorer.Compression.Deflate, @"META-INF\com.apple.ibooks.display-options.xml", apple, DateTime.Now, "");
                     }
                 }
