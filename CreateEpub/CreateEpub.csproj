@@ -44,6 +44,7 @@
     <Compile Include="Container.cs" />
     <Compile Include="DCItem.cs" />
     <Compile Include="Document.cs" />
+    <Compile Include="Globals.cs" />
     <Compile Include="Guide.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Manifest.cs" />

@@ -42,7 +42,7 @@ namespace Epub {
         internal XDocument ToXmlDocument() {
             XDocument ncxDocument;
 
-            if(Document._version == 2) {
+            if(Globals.Version == 2) {
                 ncxDocument = new XDocument(new object[] { new XDocumentType("ncx", "-//NISO/DTD ncx 2005-1//EN", "http://www.daisy.org/z3986/2005/ncx-2005.1.dtd", null) });
             } else {
                 ncxDocument = new XDocument();

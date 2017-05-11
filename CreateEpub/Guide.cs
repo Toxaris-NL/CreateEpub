@@ -10,7 +10,7 @@ namespace Epub {
         private readonly XElement _element;
 
         internal Guide() {
-            this._element = new XElement(Document.OpfNs + "guide");
+            this._element = new XElement(Globals.OpfNs + "guide");
         }
 
         internal void AddReference(string href, string type) {
@@ -18,7 +18,7 @@ namespace Epub {
         }
 
         internal void AddReference(string href, string type, string title) {
-            XElement itemref = new XElement(Document.OpfNs + "reference", new object[] { new XAttribute("href", href), new XAttribute("type", type), new XAttribute("title", title) });
+            XElement itemref = new XElement(Globals.OpfNs + "reference", new object[] { new XAttribute("href", href), new XAttribute("type", type), new XAttribute("title", title) });
             if (!string.IsNullOrEmpty(title)) {
                 itemref.SetAttributeValue("title", title);
             }

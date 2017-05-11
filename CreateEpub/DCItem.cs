@@ -28,10 +28,10 @@ namespace Epub {
         }
 
         internal XElement ToElement() {
-            XElement Element = new XElement(Document.DcNs + this._name, this._value);
+            XElement Element = new XElement(Globals.DcNs + this._name, this._value);
             foreach(string key in this._opfAttributes.Keys) {
                 string value = this._opfAttributes[key];
-                Element.SetAttributeValue(Document.OpfNs + key, value);
+                Element.SetAttributeValue(Globals.OpfNs + key, value);
             }
             foreach (string key in this._attributes.Keys) {
                 string value = this._attributes[key];

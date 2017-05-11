@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Epub {
     internal class MetaItem {
-        private string _name;
+        //private string _name;
         private readonly string _value;
         private readonly IDictionary<string, string> _attributes;
         private readonly IDictionary<string, string> _opfAttributes;
@@ -30,7 +30,7 @@ namespace Epub {
             XElement element = new XElement("meta", this._value);
             foreach(string key in this._opfAttributes.Keys) {
                 string value = this._opfAttributes[key];
-                element.SetAttributeValue(Document.OpfNs + key, value);
+                element.SetAttributeValue(Globals.OpfNs + key, value);
             }
             foreach (string key in this._attributes.Keys) {
                 string value = this._attributes[key];

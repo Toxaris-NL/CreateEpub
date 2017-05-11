@@ -10,13 +10,6 @@ using System.Xml.Linq;
 
 namespace Epub {
     public class Document {
-        internal static readonly XNamespace OpfNs = "http://www.idpf.org/2007/opf";
-        internal static readonly XNamespace DcNs = "http://purl.org/dc/elements/1.1/";
-        internal static readonly XNamespace DcTerms = "http://purl.org/dc/terms/";
-        internal static int _version;
-        internal static int _authorCount;
-        internal static int _translatorCount;
-
         private readonly Metadata _metadata;
         private readonly Manifest _manifest;
         private readonly Spine _spine;
@@ -28,6 +21,7 @@ namespace Epub {
         private string _opfDirectory;
         private string _metainfDirectory;
         private bool _apple = false;
+        private int _version;
 
         /// <summary>
         /// Creates a new ePUB document instance
@@ -41,9 +35,10 @@ namespace Epub {
             _ncx = new Ncx();
             _container = new Container();
             _ids = new Dictionary<string, int>();
-            _authorCount = 0;
-            _translatorCount = 0;
-            _version = version;
+            Globals.AuthorCount = 0;
+            Globals.TranslatorCount = 0;
+            Globals.Version = version;
+            _version = Globals.Version;
             if (_version != 2 && _version != 3) { _version = 2; }
 
             // setup mandatory TOC file
@@ -61,8 +56,8 @@ namespace Epub {
         /// </summary>
         /// <param name="version">Only version 2 and 3 are allowed. If another value is entered, the version will be set to 2.</param>
         public void SetVersion(int version) {
-            if (version != 2 && version != 3) { version = 2; }
-            _version = version;
+            if (version != 2 && version != 3) { Globals.Version = 2; }
+            _version = Globals.Version;
         }
 
         /// <summary>
@@ -130,7 +125,7 @@ namespace Epub {
         /// <param name="author">Human-readable full name</param>
         /// <param name="author_sort">Sortable arrangement of the full name</param>
         public void AddAuthor(string author, string author_sort = "") {
-            _authorCount++;
+            Globals.AuthorCount++;
             _metadata.AddAuthor(author, author_sort);
             _ncx.AddAuthor(author);
         }
@@ -150,7 +145,7 @@ namespace Epub {
         /// <param name="name">Human-readable full name</param>
         /// <param name="name_sort">Sortable arrangement of the full name</param>
         public void AddTranslator(string name, string name_sort = "") {
-            _translatorCount++;
+            Globals.TranslatorCount++;
             _metadata.AddTranslator(name, name_sort);
         }
 
@@ -341,13 +336,12 @@ namespace Epub {
             File.Copy(path, fullPath, true);
         }
 
-        private string EnsureDirectoryExists(string path) {
+        private void EnsureDirectoryExists(string path) {
             // ToDo: Ensure epubpath contains no '..\..\'
             string destinationDirectory = Path.GetDirectoryName(path);
             if (!Directory.Exists(destinationDirectory)) {
                 Directory.CreateDirectory(destinationDirectory);
             }
-            return path;
         }
 
         private void WriteFile(string epubpath, byte[] content) {
@@ -482,9 +476,9 @@ namespace Epub {
             XElement element;
 
             if (_version == 2) {
-                element = new XElement(Document.OpfNs + "package", new XAttribute("version", "2.0"), new XAttribute("unique-identifier", "BookId"));
+                element = new XElement(Globals.OpfNs + "package", new XAttribute("version", "2.0"), new XAttribute("unique-identifier", "BookId"));
             } else {
-                element = new XElement(Document.OpfNs + "package", new XAttribute("version", "3.0"), new XAttribute("unique-identifier", "BookId"), new XAttribute("prefix", "rendition: http://www.idpf.org/vocab/rendition/#"));
+                element = new XElement(Globals.OpfNs + "package", new XAttribute("version", "3.0"), new XAttribute("unique-identifier", "BookId"), new XAttribute("prefix", "rendition: http://www.idpf.org/vocab/rendition/#"));
             }
 
             element.Add(_metadata.ToElement());

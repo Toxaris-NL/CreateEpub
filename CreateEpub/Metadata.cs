@@ -57,19 +57,19 @@ namespace Epub {
 
         internal void AddCreator(string name, string role, string sort = "") {
             DcItem item = new DcItem("creator", name);
-            if (Document._version == 2) {
+            if (Globals.Version == 2) {
                 item.SetOpfAttribute("role", role);
                 if (!string.IsNullOrEmpty(sort)) {
                     item.SetOpfAttribute("file-as", sort);
                 }
                 _dcItems.Add(item);
-            } else if(Document._version == 3) {
+            } else if(Globals.Version == 3) {
                 MetaItem metaitem = new MetaItem(role);
                 string id;
                 if (role == "aut") {
-                    id = role + Document._authorCount;
+                    id = role + Globals.AuthorCount;
                 } else {
-                    id = role + Document._translatorCount;
+                    id = role + Globals.TranslatorCount;
                 }
                 item.SetAttribute("id", id);
                 _dcItems.Add(item);
@@ -88,9 +88,9 @@ namespace Epub {
 
         internal void AddTitle(string title) {
             DcItem item = new DcItem("title", title);
-            if(Document._version == 2) {
+            if(Globals.Version == 2) {
                 _dcItems.Add(item);
-            } else if (Document._version == 3) {
+            } else if (Globals.Version == 3) {
                 MetaItem metaitem = new MetaItem("main");
                 string id = "title";
                 item.SetAttribute("id", id);
@@ -102,7 +102,7 @@ namespace Epub {
         }
 
         internal void AddSeries(string serie, string number) {
-             if (Document._version == 3) {
+             if (Globals.Version == 3) {
                 DcItem item = new DcItem("title", serie);
                 MetaItem metaitem = new MetaItem("collection");
                 string id = "series";
@@ -121,10 +121,10 @@ namespace Epub {
         internal void AddModification(DateTime time) {
             string TimeString = time.ToString("yyyy-MM-ddTHH:mm:ssK", CultureInfo.InvariantCulture);
             DcItem item = new DcItem("date", TimeString);
-            if (Document._version == 2) {
+            if (Globals.Version == 2) {
                 item.SetOpfAttribute("event", "creation");
                 _dcItems.Add(item);
-            } else if (Document._version == 3) {
+            } else if (Globals.Version == 3) {
                 _dcItems.Add(item);
                 MetaItem metaitem = new MetaItem(TimeString);
                 metaitem.SetAttribute("property", "dcterms:modified");
@@ -153,11 +153,11 @@ namespace Epub {
         internal XElement ToElement() {
             XElement element;
 
-            if (Document._version == 2) {
-                element = new XElement("metadata", new XAttribute(XNamespace.Xmlns + "dc", Document.DcNs), new XAttribute(XNamespace.Xmlns + "opf", Document.OpfNs));
+            if (Globals.Version == 2) {
+                element = new XElement("metadata", new XAttribute(XNamespace.Xmlns + "dc", Globals.DcNs), new XAttribute(XNamespace.Xmlns + "opf", Globals.OpfNs));
 
-            } else if (Document._version == 3) {
-                element = new XElement("metadata", new XAttribute(XNamespace.Xmlns + "dcterms", Document.DcTerms), new XAttribute(XNamespace.Xmlns + "dc", Document.DcNs), new XAttribute(XNamespace.Xmlns + "opf", Document.OpfNs));
+            } else if (Globals.Version == 3) {
+                element = new XElement("metadata", new XAttribute(XNamespace.Xmlns + "dcterms", Globals.DcTerms), new XAttribute(XNamespace.Xmlns + "dc", Globals.DcNs), new XAttribute(XNamespace.Xmlns + "opf", Globals.OpfNs));
             } else {
                 element = new XElement("metadata");
             }

@@ -10,11 +10,11 @@ namespace Epub {
         private readonly XElement _element;
 
         internal Manifest() {
-            this._element = new XElement(Document.OpfNs + "manifest");
+            this._element = new XElement(Globals.OpfNs + "manifest");
         }
 
         internal void AddItem(string id, string href, string type, string properties = "") {
-            XElement item = new XElement(Document.OpfNs + "item");
+            XElement item = new XElement(Globals.OpfNs + "item");
             item.SetAttributeValue("id", id);
             item.SetAttributeValue("href", href);
             item.SetAttributeValue("media-type", type);

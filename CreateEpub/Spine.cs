@@ -31,12 +31,12 @@ namespace Epub {
         }
 
         internal XElement ToElement() {
-            XElement element = new XElement(Document.OpfNs + "spine");
+            XElement element = new XElement(Globals.OpfNs + "spine");
             if (!string.IsNullOrEmpty(this._toc)) {
                 element.Add(new XAttribute("toc", this._toc));
             }
             foreach(ItemRef reference in this._itemRefs) {
-                XElement item = new XElement(Document.OpfNs + "itemref", new XAttribute("idref", reference.id));
+                XElement item = new XElement(Globals.OpfNs + "itemref", new XAttribute("idref", reference.id));
                 if (!reference.linear) {
                     item.SetAttributeValue("linear", "no");
                 }
