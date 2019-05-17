@@ -7,6 +7,8 @@
     <Company>Toxaris</Company>
     <Description>A library which enables you to create a compliant epub2 or epub3 file.</Description>
     <Copyright>Copyright Toxaris, 2019</Copyright>
+    <PackageProjectUrl>https://github.com/Toxaris-NL/CreateEpub</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/Toxaris-NL/CreateEpub/blob/master/LICENSE.txt</PackageLicenseUrl>
 	
       </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
